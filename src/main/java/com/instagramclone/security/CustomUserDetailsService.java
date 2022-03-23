@@ -1,8 +1,8 @@
 package com.instagramclone.security;
 
-import com.instagramclone.entity.Role;
-import com.instagramclone.entity.User;
-import com.instagramclone.respository.UserRepository;
+import com.instagramclone.entity.user.Role;
+import com.instagramclone.entity.user.User;
+import com.instagramclone.respository.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -12,7 +12,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 

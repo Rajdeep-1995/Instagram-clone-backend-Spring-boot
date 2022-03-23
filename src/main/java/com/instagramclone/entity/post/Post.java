@@ -1,12 +1,12 @@
-package com.instagramclone.entity;
+package com.instagramclone.entity.post;
 
+import com.instagramclone.entity.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 
 

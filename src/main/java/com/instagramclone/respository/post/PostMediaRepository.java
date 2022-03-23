@@ -1,6 +1,6 @@
-package com.instagramclone.respository;
+package com.instagramclone.respository.post;
 
-import com.instagramclone.entity.PostMedia;
+import com.instagramclone.entity.post.PostMedia;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

@@ -1,9 +1,10 @@
-package com.instagramclone.respository;
+package com.instagramclone.respository.post;
 
-import com.instagramclone.entity.Like;
+import com.instagramclone.entity.post.Like;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
+
 
 public interface LikeRepository extends JpaRepository<Like,Long> {
     List<Like> findByPostId(long postId);

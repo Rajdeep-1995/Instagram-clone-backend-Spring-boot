@@ -1,6 +1,6 @@
-package com.instagramclone.respository;
+package com.instagramclone.respository.user;
 
-import com.instagramclone.entity.Role;
+import com.instagramclone.entity.user.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

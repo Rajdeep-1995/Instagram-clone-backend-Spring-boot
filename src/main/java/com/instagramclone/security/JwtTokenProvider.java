@@ -1,8 +1,8 @@
 package com.instagramclone.security;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import com.instagramclone.exception.APIException;
+import io.jsonwebtoken.*;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
@@ -14,7 +14,7 @@ public class JwtTokenProvider {
 
     private String jwtSecret = "someSecretKeyOrRandomString";
 
-    /****Token generation****/
+    /**** Token generation ****/
 
     public String generateToken(@NotNull Authentication authentication) {
 
@@ -32,6 +32,8 @@ public class JwtTokenProvider {
 
     }
 
+    /**** abstracting username form token ****/
+
     public  String getUserNameFromJwt(String token) {
         Claims claims = Jwts.parser()
                 .setSigningKey(jwtSecret)
@@ -39,6 +41,28 @@ public class JwtTokenProvider {
                 .getBody();
 
         return claims.getSubject();
+    }
+
+
+    /**** validating token ****/
+
+    public boolean validateToken(String token) {
+        try{
+            Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token);
+            return true;
+        }catch (SignatureException ex){
+            throw new APIException(HttpStatus.BAD_REQUEST,"Invalid JWT signature");
+        }catch (MalformedJwtException ex){
+            throw new APIException(HttpStatus.BAD_REQUEST,"Invalid JWT token");
+        }catch (ExpiredJwtException ex){
+            throw new APIException(HttpStatus.BAD_REQUEST,"Expired JWT token");
+        }catch (UnsupportedJwtException ex){
+            throw new APIException(HttpStatus.BAD_REQUEST,"Unsupported JWT token");
+        }catch (IllegalArgumentException ex){
+            throw new APIException(HttpStatus.BAD_REQUEST,"JWT claims string is empty");
+        }catch (Exception ex){
+            throw new APIException(HttpStatus.BAD_REQUEST,ex.getMessage());
+        }
     }
 
 
