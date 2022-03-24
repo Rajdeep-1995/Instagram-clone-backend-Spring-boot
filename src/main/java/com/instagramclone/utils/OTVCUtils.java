@@ -130,11 +130,7 @@ public class OTVCUtils {
     }
 
     public boolean checkForExistingField(String usernameOrEmailOrPhoneNumber) {
-        boolean isExist = userRepository.existsByUsernameOrEmailOrPhoneNumber(usernameOrEmailOrPhoneNumber,
+        return userRepository.existsByUsernameOrEmailOrPhoneNumber(usernameOrEmailOrPhoneNumber,
                 usernameOrEmailOrPhoneNumber,usernameOrEmailOrPhoneNumber);
-        if(isExist) {
-            return true;
-        }
-        return false;
     }
 }
