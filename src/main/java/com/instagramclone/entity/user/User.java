@@ -49,14 +49,17 @@ public class User {
     @Column(columnDefinition = "TEXT", nullable = true)
     private String currentProfilePicUrl = "http://localhost:9090/images/avatar.jpg";
 
+    @Column(columnDefinition = "TEXT", nullable = true)
+    private String profileId;
+
+    @Column(columnDefinition = "BOOLEAN", nullable = false)
+    private Boolean hasProfile = false;
+
     @CreationTimestamp
     private LocalDateTime createdAt = LocalDateTime.now();
 
     @UpdateTimestamp
     private LocalDateTime updatedAt = LocalDateTime.now();
-
-    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, orphanRemoval = true)
-    private List<ProfilePhoto> profilePhotos;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Post> posts;

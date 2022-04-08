@@ -63,7 +63,7 @@ public class AuthServiceImpl implements AuthService {
             JwtAuthResponse jwtAuthResponse = new JwtAuthResponse(jwtToken);
             UserSignInResponseDto userSignInResponseDto = new UserSignInResponseDto();
 
-            userSignInResponseDto.setId(loggedInUser.getId());
+            userSignInResponseDto.setUsername(loggedInUser.getUsername());
             userSignInResponseDto.setFullName(loggedInUser.getFullName());
             userSignInResponseDto.setProfilePhoto(loggedInUser.getCurrentProfilePicUrl());
 

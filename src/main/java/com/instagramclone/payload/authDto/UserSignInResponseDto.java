@@ -6,7 +6,7 @@ import lombok.Data;
 @Data
 @JsonPropertyOrder({"id","fullName","profilePhoto"})
 public class UserSignInResponseDto {
-    private Long Id;
+    private String username;
     private String fullName;
     private String profilePhoto;
 }
