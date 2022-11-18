@@ -34,7 +34,7 @@ public class JwtTokenProvider {
 
     /**** abstracting username form token ****/
 
-    public  String getUserNameFromJwt(String token) {
+    public String getUserNameFromJwt(String token) {
         Claims claims = Jwts.parser()
                 .setSigningKey(jwtSecret)
                 .parseClaimsJws(token)
