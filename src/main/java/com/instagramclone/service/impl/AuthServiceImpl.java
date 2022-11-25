@@ -14,7 +14,6 @@ import com.instagramclone.respository.user.UserRepository;
 import com.instagramclone.security.JwtTokenProvider;
 import com.instagramclone.service.AuthService;
 import com.instagramclone.utils.ErrorConstants;
-import org.apache.el.stream.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;

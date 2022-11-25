@@ -61,7 +61,7 @@ public class UserServiceImpl implements UserService {
             public_url = uploadResult.get("url").toString();
             public_id = uploadResult.get("public_id").toString();
 
-            // Check if the user has default profile or not, if not, remove the existing profile from cloud
+            // Check if the user has default profile or not, if exists, remove the existing profile from cloud
             if(user.getHasProfile()) {
                if(!removeProfileFromCloudinary(user.getProfileId())) {
                    throw new UnexpectedException("Failed to delete the profile photo form cloud", ErrorConstants.UNEXCPECTED_ERROR_CODE);

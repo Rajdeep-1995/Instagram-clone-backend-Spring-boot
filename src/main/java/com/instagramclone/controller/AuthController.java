@@ -1,11 +1,14 @@
 package com.instagramclone.controller;
 
+import com.instagramclone.config.SignInValidator;
+import com.instagramclone.customAnnotation.ValidateSignInRq;
 import com.instagramclone.payload.authDto.*;
 import com.instagramclone.service.AuthService;
 import com.instagramclone.utils.OTVCUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotNull;
@@ -28,7 +31,7 @@ public class AuthController {
         if(otvcUtils.generateOtvcAndSendEmail(otvcGeneratePayload.getEmailOrPhoneNumber())) {
             return new ResponseEntity<>(true,HttpStatus.OK);
         }
-        return new ResponseEntity<>(false, HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<Boolean>(false, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @PostMapping("/validate-otvc")
@@ -52,7 +55,8 @@ public class AuthController {
     }
 
     @PostMapping("/signin")
-    public ResponseEntity<JwtAuthResponse> signIn (@RequestBody @NotNull SignInDto signInDto) {
+    public ResponseEntity<JwtAuthResponse> signIn (@RequestBody SignInDto signInDto) {
+        //SignInValidator.validateSignInRq(signInDto);
         return new ResponseEntity<>(authService.signIn(signInDto),HttpStatus.OK);
       }
 

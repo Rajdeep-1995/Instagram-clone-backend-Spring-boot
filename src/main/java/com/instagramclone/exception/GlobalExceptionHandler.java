@@ -30,7 +30,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
             errors.put(fieldName,errorMessage);
         });
 
-        return new ResponseEntity<Object>(errors,HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<Object>(errors,HttpStatus.UNPROCESSABLE_ENTITY);
 
     }
 
