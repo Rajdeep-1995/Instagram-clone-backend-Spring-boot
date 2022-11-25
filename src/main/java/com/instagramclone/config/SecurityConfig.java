@@ -19,6 +19,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.cors.CorsConfiguration;
 
 import java.util.Arrays;
+import java.util.Collections;
 
 @EnableWebSecurity
 @Configuration
@@ -44,9 +45,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().configurationSource(request -> {
             CorsConfiguration cors = new CorsConfiguration();
-            cors.setAllowedOrigins(Arrays.asList("http://localhost:4000"));
+            cors.setAllowedOrigins(Arrays.asList("http://localhost:4000","http://localhost:4001"));
             cors.setAllowedMethods(Arrays.asList("GET","POST", "PUT", "DELETE", "OPTIONS"));
-            cors.setAllowedHeaders(Arrays.asList("*"));
+            cors.setAllowedHeaders(Collections.singletonList("*"));
             return cors;
         }).and().csrf().disable()
                 .exceptionHandling()

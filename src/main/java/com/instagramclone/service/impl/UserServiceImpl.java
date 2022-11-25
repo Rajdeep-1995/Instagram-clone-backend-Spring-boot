@@ -84,11 +84,7 @@ public class UserServiceImpl implements UserService {
     }
 
     private boolean removeProfileFromCloudinary(String public_id) throws IOException {
-       Map result = cloudinary.uploader().destroy(public_id,ObjectUtils.emptyMap());
-
-       if(result.get("result").equals("ok")) {
-           return true;
-       }
-    return false;
+        Map result = cloudinary.uploader().destroy(public_id,ObjectUtils.emptyMap());
+        return (result.get("result").toString().equalsIgnoreCase("ok") || result.get("result").toString().equalsIgnoreCase("not found"));
     }
 }

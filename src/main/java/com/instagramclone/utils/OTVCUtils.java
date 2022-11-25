@@ -37,15 +37,7 @@ public class OTVCUtils {
     }
 
     public boolean generateOtvcAndSendEmail(String email) {
-
-        String generatedOTC = generateOtvc(email);
-
-       if(sendEmail(email, generatedOTC)) {
-           return true;
-       }else{
-           return false;
-       }
-
+        return sendEmail(email, generateOtvc(email));
     }
 
     public boolean validateOtvc(String email, String otvc) {
@@ -56,13 +48,10 @@ public class OTVCUtils {
         String foundUserOtvc = foundUser.getOneTimeCode();
         long foundUserOtvcExpiryTime = foundUser.getExpiryTime().getTime();
 
-        if(foundUserOtvc.equals(otvc) && validateExpiry(foundUserOtvcExpiryTime,email)) {
-            return true;
-        }
-        return false;
+        return foundUserOtvc.equals(otvc) && validateExpiry(foundUserOtvcExpiryTime, email);
     }
 
-    private boolean validateExpiry(long otpRequestedTimeInMillis,String email) {
+    private boolean validateExpiry(long otpRequestedTimeInMillis, String email) {
 
         long currentTimeInMillis = System.currentTimeMillis();
 
@@ -78,9 +67,7 @@ public class OTVCUtils {
 
     private String generateOtvc(String email) {
         String OtvcGenerated = RandomString.make(8);
-        boolean existingOtvcUser = false;
-
-        existingOtvcUser = otvcRepository.existsByUserEmail(email);
+        boolean existingOtvcUser = otvcRepository.existsByUserEmail(email);
 
         if(existingOtvcUser) {
             OTVC foundOtvcUser = otvcRepository.findByUserEmail(email).orElseThrow(()->

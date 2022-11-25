@@ -8,8 +8,8 @@ import java.util.function.Supplier;
 @Getter
 public class APIException extends RuntimeException {
 
-    private HttpStatus httpStatus;
-    private String message;
+    private final HttpStatus httpStatus;
+    private final String message;
 
     public APIException(HttpStatus httpStatus, String message) {
         super(message);

@@ -26,7 +26,7 @@ public class AuthController {
     public ResponseEntity<Boolean> generateOTVC(@RequestBody OTVCGeneratePayload otvcGeneratePayload) {
 
         if(otvcUtils.generateOtvcAndSendEmail(otvcGeneratePayload.getEmailOrPhoneNumber())) {
-            return new ResponseEntity<Boolean>(true,HttpStatus.OK);
+            return new ResponseEntity<>(true,HttpStatus.OK);
         }
         return new ResponseEntity<>(false, HttpStatus.INTERNAL_SERVER_ERROR);
     }
