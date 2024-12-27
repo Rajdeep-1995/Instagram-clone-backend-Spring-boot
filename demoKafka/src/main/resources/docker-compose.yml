@@ -1,0 +1,93 @@
+version: '3.8'
+
+services:
+  # Zookeeper Service
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.0.1
+    container_name: zookeeper
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+    ports:
+      - "2181:2181"  # Expose Zookeeper port for external access
+    networks:
+      - kafka-network
+
+  # Kafka Service - Broker 1
+  kafka1:
+    image: confluentinc/cp-kafka:7.0.1
+    container_name: kafka1
+    depends_on:
+      - zookeeper
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092,PLAINTEXT_HOST://0.0.0.0:29092
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka1:9092,PLAINTEXT_HOST://localhost:29092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_LISTENER_NAME_PLAINTEXT_HOST: PLAINTEXT
+    ports:
+      - "9092:9092"    # Expose Kafka broker port for internal Docker communication
+      - "29092:29092"  # Expose external access port for localhost
+    networks:
+      - kafka-network
+
+  # Kafka Service - Broker 2
+  kafka2:
+    image: confluentinc/cp-kafka:7.0.1
+    container_name: kafka2
+    depends_on:
+      - zookeeper
+    environment:
+      KAFKA_BROKER_ID: 2
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9094,PLAINTEXT_HOST://0.0.0.0:29094
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka2:9094,PLAINTEXT_HOST://localhost:29094
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_LISTENER_NAME_PLAINTEXT_HOST: PLAINTEXT
+    ports:
+      - "9094:9094"    # Expose Kafka broker port for internal Docker communication
+      - "29094:29094"  # Expose external access port for localhost
+    networks:
+      - kafka-network
+
+  # Kafka Service - Broker 3
+  kafka3:
+    image: confluentinc/cp-kafka:7.0.1
+    container_name: kafka3
+    depends_on:
+      - zookeeper
+    environment:
+      KAFKA_BROKER_ID: 3
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9093,PLAINTEXT_HOST://0.0.0.0:29093
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka3:9093,PLAINTEXT_HOST://localhost:29093
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_LISTENER_NAME_PLAINTEXT_HOST: PLAINTEXT
+    ports:
+      - "9093:9093"    # Expose Kafka broker port for internal Docker communication
+      - "29093:29093"  # Expose external access port for localhost
+    networks:
+      - kafka-network
+
+  # Kafka UI Service
+  kafka-ui:
+    image: provectuslabs/kafka-ui:latest
+    container_name: kafka-ui
+    depends_on:
+      - kafka1
+      - kafka2
+      - kafka3
+    environment:
+      KAFKA_CLUSTERS_0_NAME: "local"
+      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: "kafka1:9092,kafka2:9094,kafka3:9093"  # Connects to all Kafka brokers
+    ports:
+      - "8080:8080"  # Expose Kafka UI on port 8080
+    networks:
+      - kafka-network
+
+networks:
+  kafka-network:
+    driver: bridge

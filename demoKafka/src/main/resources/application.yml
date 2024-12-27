@@ -1,0 +1,40 @@
+server:
+  port: 9090
+spring:
+  application:
+    name: kafka-producer-connector
+
+kafka-event:
+  topic: com.demo
+  consumer-id: kafka-event-id
+  bootstrapServers: localhost:29092,localhost:29093,localhost:29094
+  container-factory: customContainerFactory
+  group-id: com.rd.grp.test
+  operation: kafka-service
+  concurrency: 1
+  compressionType: gzip
+  batchSize: 10000
+  lingerMs: 100
+  security: n/a
+  acks: 1
+  maxRetryAttempts: 3
+  sasl-config:
+    protocol: SASL_SSL
+    mechanism: PLAIN
+    jaas-config: org.apache.kafka.common.security.plain.PlainLoginModule required username='user1' password='user1-secret';
+  properties:
+    max:
+      poll:
+        interval:
+          ms: 900000
+        records: 300
+    session:
+      timeout:
+        ms: 600000
+    request:
+      timeout:
+        ms: 300000
+    heartbeat:
+      interval:
+        ms: 1000
+
